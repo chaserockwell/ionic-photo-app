@@ -1,0 +1,62 @@
+<ion-view>
+  <ion-nav-title>
+    <img ng-if="ctrl.album.img != null"
+         ng-src="{{ctrl.album.img}}"
+         class="photo-nav-image"
+         height="30"
+         width="30"/>
+    <p ng-if="ctrl.album.img == null">{{ctrl.album.title}}</p>
+  </ion-nav-title>
+  <ion-content>
+    <div ng-if="ctrl.photos.length > 0">
+      <ion-list>
+        <ion-item class="card photo-card"
+                  ng-repeat="photo in ctrl.photos track by $index">
+          <div class="item item-divider row photo-card-top">
+            <div class="col col-66">
+              {{photo.title}}
+            </div>
+            <div class="col col-33 text-right">
+              {{photo.date.fromNow(true)}}
+            </div>
+          </div>
+          <div class="item photo-card-middle text-center">
+            <img src="{{photo.src}}"
+                 class="photo-card-img">
+          </div>
+          <div class="item item-divider row row-no-padding photo-card-bottom">
+            <a class="col col-20 col-center text-center">
+              <i class="icon ion-ios-upload-outline upload-icon"></i>
+            </a>
+            <a class="col col-offset-33 col-20 text-center"
+               ng-click="ctrl.heartPhoto(photo.id, 4)">
+              <img ng-show="photo.loved"
+                   src="./img/heart_eyes.png"
+                   width="40">
+              <img ng-show="!photo.loved"
+                   src="./img/heart_eyes_outline.png"
+                   width="40">
+            </a>
+            <a class="col col-25 text-center"
+               ng-click="ctrl.poopPhoto(photo.id, 3)">
+              <img ng-show="photo.pooped"
+                   src="./img/poop_emoji.png"
+                   width="40">
+              <img ng-show="!photo.pooped"
+                   src="./img/poop_emoji_outline.png"
+                   width="40">
+            </a>
+          </div>
+        </ion-item>
+      </ion-list>
+      <ion-infinite-scroll on-infinite="ctrl.getInfinitePhotos()">
+      </ion-infinite-scroll>
+    </div>
+    <div ng-if="ctrl.photos.length === 0"
+         class="row full-height">
+      <div class="col col-center text-center">
+        <h4 class="image-status">There are no images in this album</h4>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

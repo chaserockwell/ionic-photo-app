@@ -1,0 +1,41 @@
+<ion-view title="Albums" ng-controller="AlbumsController as ctrl">
+  <ion-nav-buttons side="right">
+    <button class="button">
+      Edit
+    </button>
+  </ion-nav-buttons>
+  <ion-content>
+    <div ng-if="ctrl.loadingPhotos"
+         class="row full-height">
+      <div class="col col-center text-center">
+        <h4 class="image-status">Loading Images...</h4>
+        <ion-spinner icon="ripple"
+                     class="load-spinner"></ion-spinner>
+      </div>
+    </div>
+    <div ng-if="!ctrl.loadingPhotos"
+         class="full-height">
+      <a class="row album-container"
+         ng-repeat="album in ctrl.albums"
+         ui-sref="photos({album: album.index})">
+        <div class="col-center col-20">
+          <div class="album-checkbox">
+          </div>
+        </div>
+        <div class="col-center col-60">
+          <h3 ng-if="album.img == null"
+              class="text-center album-title">{{album.title}}</h3>
+          <img ng-if="album.img != null"
+               src="{{album.img}}"
+               class="album-image"
+               height="40"
+               width="40"/>
+
+        </div>
+        <div class="col-center col-20 text-right album-chevron">
+          <i class="icon ion-chevron-right item-icon-left"></i>
+        </div>
+      </a>
+    </div>
+  </ion-content>
+</ion-view>
